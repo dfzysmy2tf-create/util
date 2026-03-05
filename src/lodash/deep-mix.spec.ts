@@ -16,9 +16,12 @@ describe('deepMix', () => {
 
   it('should not pollute prototype via __proto__', () => {
     const maliciousPayload = JSON.parse('{"__proto__": {"polluted": "yes"}}');
-    deepMix({}, maliciousPayload);
-    expect(({} as any).polluted).toBeUndefined();
-    delete (Object.prototype as any).polluted;
+    try {
+      deepMix({}, maliciousPayload);
+      expect(({} as any).polluted).toBeUndefined();
+    } finally {
+      delete (Object.prototype as any).polluted;
+    }
   });
 
   it('should not pollute prototype via nested __proto__', () => {
