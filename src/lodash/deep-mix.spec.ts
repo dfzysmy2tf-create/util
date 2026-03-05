@@ -1,4 +1,4 @@
-escribe('deepMix', () => {
+describe('deepMix', () => {
   it('should merge objects correctly', () => {
     const result = deepMix({}, { a: 1 }, { b: 2 });
     expect(result).toEqual({ a: 1, b: 2 });
