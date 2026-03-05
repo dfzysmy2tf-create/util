@@ -1,7 +1,7 @@
 // FIXME: Mutable param should be forbidden in static lang.
 function _mix<Base, Source>(dist: Base & Source, obj: Source): void {
   for (const key in obj) {
-    if (obj.hasOwnProperty(key) && key !== 'constructor' && obj[key] !== undefined) {
+    if (obj.hasOwnProperty(key) && key !== 'constructor' && key !== '__proto__' && key !== 'prototype' && obj[key] !== undefined) {
       (<any>dist)[key] = obj[key];
     }
   }
