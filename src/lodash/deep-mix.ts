@@ -13,11 +13,16 @@ function hasOwn(object, property) {
   return Object.prototype.hasOwnProperty.call(Object(object), property);
 }
 
+function isUnsafeKey(key: string): boolean {
+  return key === '__proto__' || key === 'constructor' || key === 'prototype';
+}
+
 function _deepMix(dist, src, level?, maxLevel?) {
   level = level || 0;
   maxLevel = maxLevel || MAX_MIX_LEVEL;
   for (const key in src) {
-    if (hasOwn(src, key)) {
+    // Modification: Add !isUnsafeKey(key) check
+    if (hasOwn(src, key) && !isUnsafeKey(key)) {
       const value = src[key];
       if (value !== null && isPlainObject(value)) {
         if (!isPlainObject(dist[key])) {
